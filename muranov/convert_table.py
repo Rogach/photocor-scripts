@@ -14,8 +14,12 @@ if len(sys.argv) == 3:
 else:
     tk_root = tk.Tk()
     tk_root.withdraw()
-    input_file_name = filedialog.askopenfilename()
-    output_file_name = filedialog.asksaveasfilename()
+    input_file_name = filedialog.askopenfilename(title = "Select input file")
+    if not input_file_name:
+        exit(1)
+    output_file_name = filedialog.asksaveasfilename(title = "Select output file")
+    if not output_file_name:
+        exit(1)
 
 def parse_time(time_str):
     h,m,s = re.search("(\d{2}):(\d{2}):(\d{2})", time_str).groups()
