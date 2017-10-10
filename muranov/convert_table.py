@@ -46,6 +46,8 @@ with codecs.open(input_file_name, encoding="cp1251") as input_file:
             if row <= 30:
                 pk = filter(lambda v: v < 4000, pk)
 
+            pk = filter(lambda v: v > 0, pk)
+
             time_since_start = ((parse_time(time_str) - start_time) % 86400) / 60
             output_file.write("%.3f" % time_since_start)
 
