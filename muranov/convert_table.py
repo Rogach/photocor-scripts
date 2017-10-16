@@ -30,13 +30,14 @@ with codecs.open(input_file_name, encoding="cp1251") as input_file:
     header = input_lines[0].split("\t")
 
     time_column_index = header.index("Measurement Date and Time")
+    mean_count_rate_column_index = header.index("Mean Count Rate")
     pk_column_indices = [header.index("Pk %d Mean Int" % i) for i in range(1,4)]
 
     row = 2
     start_time = parse_time(input_lines[row])
 
     with open(output_file_name, "w") as output_file:
-        output_file.write("Time\tPk 1\tPk 2\tPk 3\n")
+        output_file.write("Time\tPk 1\tPk 2\tPk 3\tMean Count Rate\n")
 
         while re.match("^\d+", input_lines[row]):
             line = input_lines[row].split("\t")
@@ -53,9 +54,13 @@ with codecs.open(input_file_name, encoding="cp1251") as input_file:
 
             for v in sorted(pk):
                 output_file.write("\t%.3f" % v)
+            for i in range(3 - len(pk)):
+                output_file.write("\t")
+
+            output_file.write("\t%s" % line[mean_count_rate_column_index])
 
             output_file.write("\n")
 
             row += 1
 
-            #
+#
